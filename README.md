@@ -1,5 +1,8 @@
 # EvaluacionFinalPNC
-
+EXTRAS: <br>
+* Se le aplicó seguridad al inicio de sesión <br>
+* Se hizo uso de encriptación de contraseñas <br>
+* Se puede hacer cambio de contraseña en la edición de los usuarios<br><br>
 Tecnologias utilizadas:<br><br>
 Front-end:<br>
 1. HTML<br>
