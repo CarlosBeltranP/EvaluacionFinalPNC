@@ -1,0 +1,18 @@
+Nombre de base de datos: capasdb
+Puerto: jdbc:postgresql://127.0.0.1:5432/capasdb
+dataSource Username("postgres")
+dataSource Password("root")
+
+Credenciales de administrador para ingresar al aplicativo
+Usuario: roxana
+Contraseña: 1234
+
+ó
+
+Usuario: carlos
+contraseña: 1234
+
+Credenciales de coordinador para ingresar al aplicativo
+Usuario: alexis
+Contraseña: 1234
+
