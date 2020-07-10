@@ -1,0 +1,29 @@
+<div class="table-responsive">
+	
+	<table id="escuelaList" class="table table-bordered table-hover table-striped table-light" >
+		<thead class="thead-dark">
+		<tr>
+		    <th scope="col"  >Acci&oacute;n</th>
+			<th scope="col"  >C&oacute;digo</th>
+			<th scope="col" >Descripci&oacute;n</th>
+			<th scope="col" >Estado</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr th:each="user: ${escuelaList}">
+			<td>
+				<span th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')} or (${#authorization.expression('hasRole(''ROLE_COORDINADOR'')')} and ${#httpServletRequest.remoteUser==user.username})">
+						<a href="#" th:href="@{'/editEscuela/'+ ${user.escuela_id}}"><i class="fas fa-edit"></i></a>
+					</span>
+			</td>
+			<td th:text="${user.escuela_id}"></td>
+			<td th:text="${user.escuela}"></td>
+			<td th:text="${user.bactivoDelegate}"></td>
+			
+		</tr>
+		</tbody>
+	</table>
+	<div id="deleteError" th:if="${deleteError}" class="alert alert-danger text-center" role="alert">
+	<span th:text="${deleteError}"></span>
+</div>
+</div> 

@@ -1,0 +1,109 @@
+<div th:with="disableFields=!${editMode} and ${#authorization.expression('hasRole(''ROLE_COORDINADOR'')')}">
+<form class="form" role="form" autocomplete="off"  th:object="${userForm}" th:action="${signup}?@{/signup}:(${editMode} ?@{/editUser}: @{alumnoForm})" method="post">
+
+	
+	<input class="form-control" type="hidden" th:field="${userForm.alumno_id}" th:disabled="${disableFields}">
+	<div class="form-group row">
+		<label class="col-lg-3 col-form-label form-control-label">Nombres</label>
+		<div class="col-lg-9">
+			<input class="form-control" type="text" th:field="${userForm.firstName}" th:disabled="${disableFields}">
+			<div class="alert-danger" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">Name Error</div>
+		</div>
+	</div>
+	<div class="form-group row">
+		<label class="col-lg-3 col-form-label form-control-label">Apellidos</label>
+		<div class="col-lg-9">
+			<input class="form-control" type="text" th:field="${userForm.lastName}" th:disabled="${disableFields}">
+			<div class="alert-danger" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Name Error</div>
+		</div>
+	</div>
+		<div class="form-group row">
+		<label class="col-lg-3 col-form-label form-control-label">Carnet minoridad</label>
+		<div class="col-lg-9">
+			<input class="form-control" type="text" th:field="${userForm.carnet}" th:disabled="${disableFields}">
+			<div class="alert-danger" th:if="${#fields.hasErrors('carnet')}" th:errors="*{carnet}">Carnet Error</div>
+		</div>
+	</div>
+		<div class="form-group row">
+		<label class="col-lg-3 col-form-label form-control-label">Nacimiento</label>
+		<div class="col-lg-9">
+			<input class="form-control" type="text" th:field="${userForm.nacimiento}" th:disabled="${disableFields}">
+			<div class="alert-danger" th:if="${#fields.hasErrors('nacimiento')}" th:errors="*{nacimiento}">Address Error</div>
+		</div>
+	</div>
+	<input class="form-control" type="hidden" th:field="${userForm.edad}" th:disabled="${disableFields}">
+			
+	
+	<div class="form-group row">
+		<label class="col-lg-3 col-form-label form-control-label">Direcci&oacute;n</label>
+		<div class="col-lg-9">
+			<input class="form-control" type="text" th:field="${userForm.direccion}" th:disabled="${disableFields}">
+			<div class="alert-danger" th:if="${#fields.hasErrors('direccion')}" th:errors="*{direccion}">Address Error</div>
+		</div>
+	</div>
+	<div class="form-group row">
+		<label class="col-lg-3 col-form-label form-control-label">Departamento</label> 
+		<div class="col-lg-9">
+			<select class="form-control"   th:field="${userForm.departamento.departamento_id}" th:disabled="${disableFields}">
+				<option th:each="depa :${departamentos}"
+						th:value="${depa.departamento_id}"
+						th:text="${depa.nombre}">
+				</option>
+			</select>
+   		</div>
+    </div>
+	
+	<div class="form-group row">
+		<label class="col-lg-3 col-form-label form-control-label">Telefono fijo</label>
+		<div class="col-lg-9">
+			<input class="form-control" type="text" th:field="${userForm.telefono}" th:disabled="${disableFields}">
+			<div class="alert-danger" th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}">Telefono Error</div>
+		</div>
+	</div>
+	
+		<div class="form-group row">
+		<label class="col-lg-3 col-form-label form-control-label">Telefono movil</label>
+		<div class="col-lg-9">
+			<input class="form-control" type="text" th:field="${userForm.movil}" th:disabled="${disableFields}">
+			<div class="alert-danger" th:if="${#fields.hasErrors('movil')}" th:errors="*{movil}">Movil Error</div>
+		</div>
+	</div>
+	<div class="form-group row">
+		<label class="col-lg-3 col-form-label form-control-label">Escuela</label> 
+		<div class="col-lg-9">
+			<select class="form-control"   th:field="${userForm.escuela.escuela_id}" th:disabled="${disableFields}">
+				<option th:each="depa :${escuelas}"
+						th:value="${depa.escuela_id}"
+						th:text="${depa.escuela}">
+				</option>
+			</select>
+   		</div>
+    </div>
+    	<div class="form-group row">
+		<label class="col-lg-3 col-form-label form-control-label">Nombre Madre</label>
+		<div class="col-lg-9">
+			<input class="form-control" type="text" th:field="${userForm.madre}" th:disabled="${disableFields}">
+			<div class="alert-danger" th:if="${#fields.hasErrors('madre')}" th:errors="*{madre}">Madre Error</div>
+		</div>
+	</div>
+		<div class="form-group row">
+		<label class="col-lg-3 col-form-label form-control-label">Nombre Padre</label>
+		<div class="col-lg-9">
+			<input class="form-control" type="text" th:field="${userForm.padre}" th:disabled="${disableFields}">
+			<div class="alert-danger" th:if="${#fields.hasErrors('padre')}" th:errors="*{padre}">Padre Error</div>
+		</div>
+	</div>
+
+	<div class="form-group row">
+		<div class="col-lg-12 text-center">
+			<a class="btn btn-secondary"  th:href="@{'/userForm/cancel'}">Cancelar</a>
+			<button type="button" class="btn btn-secondary" data-toggle="modal" th:if="${editMode}" data-target="#changePasswordModal">Cambiar contrase&ntilde;a</button>
+			
+			<input type="submit" class="btn btn-primary" value="Save Changes" th:value="${editMode}?'Guardar usuario' : 'Crear usuario'">
+		</div>
+	</div>
+	
+	<div class="alert alert-danger text-center" th:if="${formErrorMessage}" th:text="${formErrorMessage}">Error Message</div>
+	<div class="alert alert-success text-center d-none" id="formSuccess" th:if="${editMode}" >Success Message</div>
+</form>
+</div> 

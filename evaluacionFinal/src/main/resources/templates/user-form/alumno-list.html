@@ -1,0 +1,59 @@
+<div class="table-responsive">
+	
+	<table id="alumnoList" class="table table-bordered table-hover table-striped table-light" >
+		<thead class="thead-dark">
+		<tr>
+			<th scope="col"  >#</th>
+			<th scope="col" >Nombres</th>
+			<th scope="col" >Apellidos</th>
+			<th scope="col" >Carnet minoridad</th>
+			<th scope="col" >Nacimiento</th>
+			<th scope="col" >Edad</th>
+			<th scope="col" >Direccion</th>
+			<th scope="col" >Telefono fijo</th>
+			<th scope="col" >Telefono movil</th>
+			<th scope="col" >Escuela</th>
+		    <th scope="col" >Nombre Madre</th>
+			<th scope="col" >Nombre Padre</th>
+			<th></th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr th:each="user: ${alumnoList}">
+			<td th:text="${user.alumno_id}"></td>
+			<td th:text="${user.firstName}"></td>
+			<td th:text="${user.lastName}"></td>
+			<td th:text="${user.carnet}"></td>
+			<td th:text="${user.fechaDelegate}"></td> <!--nacimiento  -->
+			<td th:text="${user.edad}"></td>
+			<td th:text="${user.direccion}"></td>
+			<td th:text="${user.telefono}"></td>
+			<td th:text="${user.movil}"></td>
+			<td th:text="${user.escuela.escuela}"></td>
+			<td th:text="${user.direccion}"></td>
+			<td th:text="${user.madre}"></td>
+			<td th:text="${user.padre}"></td>
+			<td>
+		
+				<span th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')} or (${#authorization.expression('hasRole(''ROLE_COORDINADOR'')')} and ${#httpServletRequest.remoteUser==user.username})">
+					<a href="#" th:href="@{'/editUser/'+ ${user.id}}"><i class="fas fa-edit"></i></a>
+				</span>
+			</td>
+		</tr>
+		</tbody>
+	</table>
+	<div id="deleteError" th:if="${deleteError}" class="alert alert-danger text-center" role="alert">
+	<span th:text="${deleteError}"></span>
+</div>
+<script type="text/javascript">
+function confirmDelete(id){
+	$('#deleteModal').modal('show');
+	$("#userIdHiddenInput").val(id);
+}
+
+function deleteUser(){
+	var id = $("#userIdHiddenInput").val();
+    window.location = "deleteUser/"+id;
+}
+</script>
+</div> 

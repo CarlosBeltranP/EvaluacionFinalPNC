@@ -1,0 +1,55 @@
+<div class="table-responsive">
+	
+	<table id="userList" class="table table-bordered table-hover table-striped table-light" >
+		<thead class="thead-dark">
+		<tr>
+			<th scope="col"  >C&oacute;digo</th>
+			<th scope="col" >Nombre</th>
+			<th scope="col" >Apellido</th>
+			<th scope="col" >Usuario</th>
+			<th scope="col" >Direcci&oacute;n</th>
+			<th scope="col" >Departamento</th>
+			<th scope="col" >Fecha de Nacimiento</th>
+			<th scope="col" >Edad</th>
+			<th scope="col" >Estado</th>
+			<th></th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr th:each="user: ${userList}">
+			<td th:text="${user.id}"></td>
+			<td th:text="${user.firstName}"></td>
+			<td th:text="${user.lastName}"></td>
+			<td th:text="${user.username}"></td>
+			<td th:text="${user.direccion}"></td>
+			<td th:text="${user.departamento.nombre}"></td>
+			<td th:text="${user.fechaDelegate}"></td>
+			<td th:text="${user.edad}"></td>
+			<td th:text="${user.bactivoDelegate}"></td>
+			<td>
+		
+				<span th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')} or (${#authorization.expression('hasRole(''ROLE_COORDINADOR'')')} and ${#httpServletRequest.remoteUser==user.username})">
+						<a href="#" th:href="@{'/editUser/'+ ${user.id}}"><i class="fas fa-edit"></i></a>
+					</span>
+					<span th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" >
+			    <a href="#" th:onclick="'javascript:confirmDelete(\''+ ${user.id} +'\');'"><i class="fas fa-user-times"></i></a>
+			</span>
+			</td>
+		</tr>
+		</tbody>
+	</table>
+	<div id="deleteError" th:if="${deleteError}" class="alert alert-danger text-center" role="alert">
+	<span th:text="${deleteError}"></span>
+</div>
+<script type="text/javascript">
+function confirmDelete(id){
+	$('#deleteModal').modal('show');
+	$("#userIdHiddenInput").val(id);
+}
+
+function deleteUser(){
+	var id = $("#userIdHiddenInput").val();
+    window.location = "deleteUser/"+id;
+}
+</script>
+</div> 
